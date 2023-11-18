@@ -4,9 +4,7 @@ jobs:
   check-app:
     runs-on: ubuntu-latest
     steps:
-      #inserir os arquivos no ubuntu
       - uses: actions/checkout@v2
-      #prepara o ambiente para executar codigo go
       - uses: actions/setup-go@v2
         with:
           go-version: 1.21
