@@ -6,5 +6,7 @@ type CartItemRepository interface {
 	Create(cartItem *entity.CartItem) error
 	List(cartID string) ([]*entity.CartItem, error)
 	Get(id string) (*entity.CartItem, error)
+	GetByCartID(cartId, productID string) (*entity.CartItem, error)
+	Update(cartItem *entity.CartItem) error
 	Delete(id string) error
 }

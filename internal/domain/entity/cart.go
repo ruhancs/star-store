@@ -1,6 +1,8 @@
 package entity
 
-import uuid "github.com/satori/go.uuid"
+import (
+	uuid "github.com/satori/go.uuid"
+)
 
 type Cart struct {
 	ID        string      `json:"id"`
@@ -23,7 +25,22 @@ func NewCart(clientID string, cartItems []*CartItem) *Cart {
 func (c *Cart) CalculateTotal() float64 {
 	var total = 0.0
 	for _, item := range c.CartItems {
-		total += item.Total
+		total += item.Total 
 	}
 	return total
+}
+
+func(c *Cart) InsertItem(item *CartItem) {
+	for index,i := range c.CartItems {
+		if i.ProductName == item.ProductName {
+			i.Quantity += item.Quantity
+			c.CartItems[index].Quantity = i.Quantity
+			c.CartItems[index].Total = c.CartItems[index].CalculateTotal()
+			c.Total = c.CalculateTotal()
+			return
+		}
+	}
+	c.CartItems = append(c.CartItems, item)
+	c.Total = c.CalculateTotal()
+	return
 }
