@@ -1,0 +1,1 @@
+CREATE TABLE clients (id varchar PRIMARY KEY, name varchar, zip_code varchar);

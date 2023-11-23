@@ -1,0 +1,20 @@
+services:  
+
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra
+    ports:
+      - 9042:9042
+    volumes:
+      - .cassandra:/var/lib/cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cloudinfra
+  
+  #  start Redis, and ensure that data is stored to a mounted volume
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - ./db-data/redis/:/data

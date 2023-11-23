@@ -11,7 +11,7 @@ type CreateProducteUseCase struct {
 	ProductRepository gateway.ProductRepositoryInterface
 }
 
-func NewCreateProducteUseCase(repo gateway.ProductRepositoryInterface) *CreateProducteUseCase{
+func NewCreateProductUseCase(repo gateway.ProductRepositoryInterface) *CreateProducteUseCase{
 	return &CreateProducteUseCase{
 		ProductRepository: repo,
 	}

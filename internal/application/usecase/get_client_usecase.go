@@ -22,7 +22,7 @@ func(u *GetClientUseCase) Execute(id string) (*dto.OutputGetClientDto,error) {
 	}
 
 	output := dto.OutputGetClientDto{
-		Client: &client,
+		Client: client,
 	}
 
 	return &output,nil

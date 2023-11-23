@@ -27,9 +27,9 @@ func TestListProductUseCase(t *testing.T) {
 	assert.Equal(t,"p1",out.Items[0].Title)
 	assert.Equal(t,"qwe123",out.Items[0].ZipCode)
 	assert.Equal(t,"Ju",out.Items[0].Seller)
-	assert.Equal(t,10,out.Items[0].Price)
+	assert.Equal(t,float32(10),out.Items[0].Price)
 	assert.Equal(t,"p2",out.Items[1].Title)
 	assert.Equal(t,"jash7",out.Items[1].ZipCode)
 	assert.Equal(t,"Ju",out.Items[1].Seller)
-	assert.Equal(t,20,out.Items[1].Price)
+	assert.Equal(t,float32(20),out.Items[1].Price)
 }

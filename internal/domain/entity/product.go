@@ -8,16 +8,16 @@ import (
 )
 
 type Product struct {
-	ID          string    `json:"id" valid:"required"`
-	Title       string    `json:"title" valid:"required"`
-	Price       int       `json:"price" valid:"required"`
-	ZipCode     string    `json:"zip_code" valid:"required"`
-	Seller      string    `json:"seller" valid:"required"`
-	ThumbnailHD string    `json:"thumbnail" valid:"required"`
-	Date        time.Time `json:"date"`
+	ID          string  `json:"id" valid:"required"`
+	Title       string  `json:"title" valid:"required"`
+	Price       float32 `json:"price" valid:"required"`
+	ZipCode     string  `json:"zip_code" valid:"required"`
+	Seller      string  `json:"seller" valid:"required"`
+	ThumbnailHD string  `json:"thumbnail" valid:"required"`
+	Date        string  `json:"date"`
 }
 
-func NewProduct(title, zip, seller, thumb string, price int) (*Product, error) {
+func NewProduct(title, zip, seller, thumb string, price float32) (*Product, error) {
 	product := &Product{
 		ID:          uuid.NewV4().String(),
 		Title:       title,
@@ -25,7 +25,7 @@ func NewProduct(title, zip, seller, thumb string, price int) (*Product, error) {
 		ZipCode:     zip,
 		Seller:      seller,
 		ThumbnailHD: thumb,
-		Date:        time.Now(),
+		Date:        time.Now().UTC().String(),
 	}
 	err := product.isValid()
 	if err != nil {
