@@ -28,6 +28,9 @@ func (u *BuyUseCase) Execute(input dto.InputBuyUseCaseDto) (*dto.OutputBuyUseCas
 		return nil, errors.New("client not found")
 	}
 	transaction, err := entity.NewTransaction(client.ID, client.Name, input.CardNumber, input.Value)
+	if err != nil {
+		return nil, err
+	}
 
 	err = u.TransactionRepository.Create(transaction)
 	if err != nil {
@@ -41,5 +44,5 @@ func (u *BuyUseCase) Execute(input dto.InputBuyUseCaseDto) (*dto.OutputBuyUseCas
 		CreditCardNumber: input.CardNumber,
 	}
 
-	return output,nil
+	return output, nil
 }

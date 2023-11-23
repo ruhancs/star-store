@@ -9,22 +9,22 @@ import (
 )
 
 type Transaction struct {
-	PurchaseID string    `json:"purchase_id" valid:"required"`
-	ClientID   string    `json:"client_id" valid:"required"`
-	ClientName string    `json:"client_name" valid:"required"`
-	TotalToPay float64   `json:"total_to_pay" valid:"required"`
-	CreditCard string    `json:"credit_card" valid:"required,stringlength(16|16)"`
-	Date       time.Time `json:"date"`
+	PurchaseID string  `json:"purchase_id" valid:"required"`
+	ClientID   string  `json:"client_id" valid:"required"`
+	ClientName string  `json:"client_name" valid:"required"`
+	TotalToPay float32 `json:"total_to_pay" valid:"required"`
+	CreditCard string  `json:"credit_card" valid:"required,stringlength(16|16)"`
+	Date       string  `json:"date"`
 }
 
-func NewTransaction(clientId, clientName, creditCard string, totalToPay float64) (*Transaction, error) {
+func NewTransaction(clientId, clientName, creditCard string, totalToPay float32) (*Transaction, error) {
 	transaction := &Transaction{
 		PurchaseID: uuid.NewV4().String(),
 		ClientID:   clientId,
 		ClientName: clientName,
 		TotalToPay: totalToPay,
 		CreditCard: creditCard,
-		Date:       time.Now(),
+		Date:       time.Now().UTC().String(),
 	}
 
 	err := transaction.isValid()

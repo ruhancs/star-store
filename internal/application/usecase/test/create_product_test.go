@@ -16,7 +16,7 @@ func TestNewCreateProducteUseCase(t *testing.T) {
 	defer ctrl.Finish()
 	productMockRepo := mock_gateway.NewMockProductRepositoryInterface(ctrl)
 	productMockRepo.EXPECT().Create(gomock.Any()).AnyTimes()
-	createProductUseCase := usecase.NewCreateProducteUseCase(productMockRepo)
+	createProductUseCase := usecase.NewCreateProductUseCase(productMockRepo)
 
 	input := dto.InputCreateProductDto{
 		Title: "P1",
@@ -30,5 +30,5 @@ func TestNewCreateProducteUseCase(t *testing.T) {
 	assert.Nil(t,err)
 	assert.NotNil(t,output)
 	assert.Equal(t,"P1",output.Title)
-	assert.Equal(t,10,output.Price)
+	assert.Equal(t,float32(10),output.Price)
 }

@@ -20,37 +20,58 @@ func NewInsertItemOnCartUseCase(
 	return &InsertItemOnCartUseCase{
 		CartRepository:     cartRepo,
 		CartItemRepository: cartItemRepo,
-		ProductRepository: productRepo,
+		ProductRepository:  productRepo,
 	}
 }
 
-func (u *InsertItemOnCartUseCase) Execute(input dto.InputInserItemOnCartDto) (*dto.OutputInserItemOnCartDto,error) {
-	cartItem, err := u.CartItemRepository.GetByCartID(input.Cart.ID, input.ProductID)
+func (u *InsertItemOnCartUseCase) Execute(input dto.InputInserItemOnCartDto, cart *entity.Cart, cartItem *entity.CartItem) (*dto.OutputInserItemOnCartDto, error) {
+	_, err := u.CartRepository.GetByID(cart.ID)
 	if err != nil {
-		product,err := u.ProductRepository.Get(input.ProductID)
-		if err != nil {
-			return nil, err
-		}
-		cartItem, err := entity.NewCartItem(product.Title,input.ClientID,input.Cart.ID,input.Quantity,float64(product.Price))
+		err := u.CartRepository.Create(cart)
 		if err != nil {
 			return nil, err
 		}
 		err = u.CartItemRepository.Create(cartItem)
 		if err != nil {
+			//user unit of work
+			err = u.CartItemRepository.Create(cartItem)
+		}
+		return &dto.OutputInserItemOnCartDto{
+			Items: cart.CartItems,
+			Total: cart.Total,
+		}, nil
+	}
+
+	cartItemExist, err := u.CartItemRepository.GetByCartID(cart.ID, cartItem.ProductName)
+	if err != nil {
+		err = u.CartItemRepository.Create(cartItem)
+		if err != nil {
+			//user unit of work
+			err = u.CartItemRepository.Create(cartItem)
+		}
+		err := u.CartRepository.Update(cart)
+		if err != nil {
 			return nil, err
 		}
-		input.Cart.InsertItem(cartItem)
-		u.CartRepository.Update(input.Cart)
 		return &dto.OutputInserItemOnCartDto{
-			Items: input.Cart.CartItems,
-			Total: input.Cart.Total,
-			},nil
-		}
-		
-	input.Cart.InsertItem(cartItem)
-	u.CartRepository.Update(input.Cart)
+			Items: cart.CartItems,
+			Total: cart.Total,
+		}, nil
+	}
+
+	cartItemUpdated := &entity.CartItem{
+		ID: cartItemExist.ID,
+		ProductName: cartItemExist.ProductName,
+		ProductPrice: cartItemExist.ProductPrice,
+		ClientID: cartItemExist.ClientID,
+		CartID: cartItemExist.CartID,
+		Quantity: cartItemExist.Quantity + cartItem.Quantity,
+		Total: cartItemExist.CalculateTotal() + cartItem.Total,
+	}
+	u.CartItemRepository.Update(cartItemUpdated)
+	u.CartRepository.Update(cart)
 	return &dto.OutputInserItemOnCartDto{
-		Items: input.Cart.CartItems,
-		Total: input.Cart.Total,
-	},nil
+		Items: cart.CartItems,
+		Total: cart.Total,
+	}, nil
 }

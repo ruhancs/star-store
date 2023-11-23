@@ -16,7 +16,7 @@ func TestNewProduct(t *testing.T) {
 	assert.Equal(t,"12314452",product.ZipCode)
 	assert.Equal(t,"Juca",product.Seller)
 	assert.Equal(t,"thum.url",product.ThumbnailHD)
-	assert.Equal(t,10,product.Price)
+	assert.Equal(t,float32(10),product.Price)
 }
 
 func TestNewProductInvalidTitle(t *testing.T) {

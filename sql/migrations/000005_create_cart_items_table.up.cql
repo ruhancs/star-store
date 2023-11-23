@@ -1,0 +1,1 @@
+CREATE TABLE cart_items (id varchar PRIMARY KEY,client_id varchar, cart_id varchar, product_name varchar, product_price float, quantity int, ,total float);

@@ -9,22 +9,23 @@ type GetCartByClientIDUseCase struct {
 	CartRepository gateway.CartRepositoryInterface
 }
 
-func NewGetCartByClientIDUseCase(repo gateway.CartRepositoryInterface) *GetCartByClientIDUseCase{
+func NewGetCartByClientIDUseCase(repo gateway.CartRepositoryInterface) *GetCartByClientIDUseCase {
 	return &GetCartByClientIDUseCase{
 		CartRepository: repo,
 	}
 }
 
-func(u *GetCartByClientIDUseCase) Execute(clientID string) (*dto.OutputGetCarByClientIDtDto,error) {
-	cart,err := u.CartRepository.GetByUser(clientID)
+func (u *GetCartByClientIDUseCase) Execute(clientID string) (*dto.OutputGetCarByClientIDtDto, error) {
+	cart, err := u.CartRepository.GetByUser(clientID)
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
 	out := &dto.OutputGetCarByClientIDtDto{
-		ClientID: cart.ClientID,
+		CartID:    cart.ID,
+		ClientID:  cart.ClientID,
 		CartItems: cart.CartItems,
-		Total: cart.Total,
+		Total:     cart.Total,
 	}
-	return out,nil
-} 
+	return out, nil
+}

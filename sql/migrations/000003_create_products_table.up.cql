@@ -1,0 +1,1 @@
+CREATE TABLE products (id varchar PRIMARY KEY,title varchar, seller varchar, thumbnail varchar, zip_code varchar, price float, date varchar);

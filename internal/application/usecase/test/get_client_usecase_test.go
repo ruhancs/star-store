@@ -15,7 +15,7 @@ func TestGetClientUseCase(t *testing.T) {
 	var ctrl = gomock.NewController(t)
 	defer ctrl.Finish()
 	clientMockRepo := mock_gateway.NewMockClientRepositoryInterface(ctrl)
-	clientMockRepo.EXPECT().Get(c.ID).Return(*c, nil)
+	clientMockRepo.EXPECT().Get(c.ID).Return(c, nil)
 
 	getClientUseCase := usecase.NewGetClientUseCase(clientMockRepo)
 

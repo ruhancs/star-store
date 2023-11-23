@@ -8,17 +8,18 @@ import (
 type CartItem struct {
 	ID           string  `json:"id"`
 	ProductName  string  `json:"product_name"`
-	ProductPrice float64 `json:"product_price"`
+	ProductPrice float32 `json:"product_price"`
 	ClientID     string  `json:"client_id"`
 	CartID       string  `json:"cart_id"`
 	Quantity     int     `json:"quantity"`
-	Total        float64 `json:"total"`
+	Total        float32 `json:"total"`
 }
 
-func NewCartItem(productName, clientID, cartID string, quantity int, productPrice float64) (*CartItem, error) {
+func NewCartItem(productName, clientID, cartID string, quantity int, productPrice float32) (*CartItem, error) {
 	cartItem := &CartItem{
 		ID:           uuid.NewV4().String(),
 		ProductName:  productName,
+		CartID:       cartID,
 		ProductPrice: productPrice,
 		ClientID:     clientID,
 		Quantity:     quantity,
@@ -40,19 +41,19 @@ func (c *CartItem) isValid() error {
 	return nil
 }
 
-func (c *CartItem) CalculateTotal() float64 {
-	total := c.ProductPrice * float64(c.Quantity)
+func (c *CartItem) CalculateTotal() float32 {
+	total := c.ProductPrice * float32(c.Quantity)
 	return total
 }
 
 func (c *CartItem) IncreaseQuantity(value int) {
 	c.Quantity = c.Quantity + value
-	c.Total = c.ProductPrice * float64(c.Quantity)
+	c.Total = c.ProductPrice * float32(c.Quantity)
 }
 
 func (c *CartItem) DecreaseQuantity() {
 	if c.Quantity > 0 {
 		c.Quantity = c.Quantity - 1
-		c.Total = c.ProductPrice * float64(c.Quantity)
+		c.Total = c.ProductPrice * float32(c.Quantity)
 	}
 }

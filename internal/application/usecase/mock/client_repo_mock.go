@@ -49,10 +49,10 @@ func (mr *MockClientRepositoryInterfaceMockRecorder) Create(client interface{}) 
 }
 
 // Get mocks base method.
-func (m *MockClientRepositoryInterface) Get(id string) (entity.Client, error) {
+func (m *MockClientRepositoryInterface) Get(id string) (*entity.Client, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", id)
-	ret0, _ := ret[0].(entity.Client)
+	ret0, _ := ret[0].(*entity.Client)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

@@ -25,5 +25,5 @@ func TestGetProductUseCase(t *testing.T) {
 	assert.Equal(t, "p1", out.Item.Title)
 	assert.Equal(t, "qwe123", out.Item.ZipCode)
 	assert.Equal(t, "Ju", out.Item.Seller)
-	assert.Equal(t, 10, out.Item.Price)
+	assert.Equal(t, float32(10), out.Item.Price)
 }

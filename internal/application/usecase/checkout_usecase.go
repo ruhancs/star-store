@@ -3,6 +3,7 @@ package usecase
 import (
 	"errors"
 	"star_store/internal/application/dto"
+	"star_store/internal/domain/entity"
 	"star_store/internal/domain/gateway"
 )
 
@@ -18,10 +19,10 @@ func NewCheckoutUseCase(cartRepo gateway.CartRepositoryInterface, clientRepo gat
 	}
 } 
 
-func(u *CheckoutUseCase) Execute(cartID string) (*dto.OutputCheckoutUseCase,error) {
-	cart,err := u.CartRepository.GetByID(cartID)
+func(u *CheckoutUseCase) Execute(cart *entity.Cart) (*dto.OutputCheckoutUseCase,error) {
+	err := u.CartRepository.Create(cart)
 	if err != nil {
-		return nil,errors.New("cart not found")
+		return nil,err
 	}
 	client,err := u.ClientRepository.Get(cart.ClientID)
 	if err != nil {

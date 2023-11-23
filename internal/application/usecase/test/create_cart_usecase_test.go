@@ -32,6 +32,6 @@ func TestCreateCreatCartUseCase(t *testing.T) {
 	assert.NotNil(t,out)
 	assert.Equal(t,cart.ClientID,out.ClientID)
 	assert.Equal(t,cart.Total,out.Total)
-	assert.Equal(t,40.0,out.Total)
+	assert.Equal(t,float32(40),out.Total)
 	assert.Equal(t,cart.CartItems[0],out.CartItems[0])
 }
